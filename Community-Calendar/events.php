@@ -12,21 +12,25 @@
 	
 	$cookie = explode(',', $array);
 	
-	if($saved && !$category){
-		//SAVED
-		$query = "SELECT * FROM events WHERE id IN ($saved) ORDER BY timeid ASC LIMIT $more,5";
-	}else if($saved && $category){
-		//SAVED WITH CATEGORY
-		$query = "SELECT * FROM events WHERE id IN ($saved) && type='$category' ORDER BY timeid ASC LIMIT $more,5";
-	}else if($category && !$saved){
-		//WITH CATEGORY
-		$query = "SELECT * FROM events WHERE city='$city' && state='$state' && type='$category' ORDER BY timeid ASC LIMIT $more,5";
-	}else if($cost){
-		//COST
-		$query = "SELECT * FROM events WHERE city='$city' && state='$state' && cost='$cost' ORDER BY timeid ASC LIMIT $more,5";
-	}else{	
-		//FOR EVENTS
-		$query = "SELECT * FROM events WHERE city='$city' && state='$state' ORDER BY timeid ASC LIMIT $more,5";
+	if(!$saved){
+		if($category){
+			//WITH CATEGORY
+			$query = "SELECT * FROM events WHERE city='$city' && state='$state' && type='$category' ORDER BY timeid ASC LIMIT $more,5";
+		}else if($cost){
+			//COST
+			$query = "SELECT * FROM events WHERE city='$city' && state='$state' && cost='$cost' ORDER BY timeid ASC LIMIT $more,5";
+		}else{	
+			//FOR EVENTS
+			$query = "SELECT * FROM events WHERE city='$city' && state='$state' ORDER BY timeid ASC LIMIT $more,5";
+		}
+	}else{
+		if(!$category){
+			//SAVED
+			$query = "SELECT * FROM events WHERE id IN ($saved) ORDER BY timeid ASC LIMIT $more,5";
+		}else{
+			//SAVED WITH CATEGORY
+			$query = "SELECT * FROM events WHERE id IN ($saved) && type='$category' ORDER BY timeid ASC LIMIT $more,5";
+		}
 	}
 	
 	$sql = mysql_query($query); 
