@@ -8,7 +8,7 @@ $(function(){
 	//CheckUrlTimer
 	window.onhashchange = checkUrl;
 	//CheckUrl
-	checkUrl();
+	//checkUrl();
 	//MinimizeMaximizeiFrame
 	$('#hide').click(function(){
 		if($(this).text() == 'hide'){
@@ -538,20 +538,17 @@ function checkUrl(){
 	var loc = hash.split('/');
 	var city = loc[0];
 	var state = loc[1];
+	var current = $('#location').attr('city');
 	
-	/*if($('#location').attr('city') != city && hash && !$('#events').attr('back') && hash != 'saved'){
-		$('#location').attr('back','yes');
-		viewEvents(city,state);
-		console.log('check city');
-		//clearInterval(timer);
-	}else if(hash == 'saved' && !$('#location').attr('saved') && !$('#events').attr('back') ){
-		$('#location').attr('back','yes');
-		savedEvents();
-		console.log('check saved');
-		return false;
-	}else{
-		return false;
-	}*/
+	if(city != current){
+		if(city == 'saved'){
+			savedEvents();
+			console.log('check saved');
+		}else{
+			viewEvents(city,state);
+			console.log('check city');
+		}
+	}
 }
 //SetCookies
 function setCookie(name, value, exp_y, exp_m, exp_d, path, domain, secure) {
